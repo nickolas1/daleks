@@ -1,0 +1,109 @@
+<div id="content"
+  ng-controller="GameController as ctrl">
+
+  <!-- heading -->
+  <div id="heading">
+    <h1 class="title" ng-click="ctrl.newGame()">daleks</h1>
+    <h1 class="info" ng-click="ctrl.toggleInstructions()">?</h1>
+    <div class="settings" ng-click="ctrl.toggleSettings()">
+      <img src="images/settings.png">
+    </div>
+    <div class="info-container">
+      <div class="score-container">{{ ctrl.game.score }}</div>
+      <div class="best-container">{{ ctrl.game.highscore }}</div>
+    </div>
+  </div>
+  
+  
+  <div id="game-container-{{ctrl.game.boardSize}}">
+    <div board 
+      ng-model="ctrl.game"
+      ng-mouseleave="ctrl.game.clearMouseDirection()"></div>
+    
+    <div id="dead-doctor" ng-if="ctrl.game.gameOver || 
+      ctrl.game.nextLevel || 
+      ctrl.game.showInstructions ||
+      ctrl.game.showSettings"
+      class="game-overlay game-overlay-fade"></div>
+    <div ng-if="ctrl.game.gameOver" class="game-overlay game-overlay-content">
+   game over
+      <div class="lower">
+        <a ng-click="ctrl.newGame()">
+          new game
+        </a>
+      </div>
+    </div>
+    
+    <div ng-if="ctrl.game.nextLevel" class="game-overlay game-overlay-content">
+      level clear
+      <div class="lower">
+        <a ng-click="ctrl.nextLevel(ctrl.level)">
+          next level
+        </a>
+      </div>
+    </div>
+    
+    <div ng-if="ctrl.game.showInstructions" 
+      class="game-overlay game-overlay-content game-overlay-content-info"
+      ng-click="ctrl.clearOverlays();">
+      <p ng-if="!ctrl.game.maximalGraphics"><em>what?</em>&nbsp;&nbsp;You are the doctor, a little blue square. You're being chased by the little red Dalek squares.
+        Every time you take a step, they take a step towards you. Make them crash into each other or into grey
+        piles of Dalek rubble to score points.</p>
+      <p ng-if="ctrl.game.maximalGraphics"><em>what?</em>&nbsp;&nbsp;You are the doctor. You're being chased by the Daleks.
+        Every time you take a step, they take a step towards you. Make them crash into each other or into
+        piles of Dalek rubble to score points.</p>
+          
+      <p><em>how?</em>&nbsp;&nbsp;If you mouse around the board an orange square lights up- that's where
+        you'll move if you click. You can click on 'teleport' to randomly jump around the board. When
+        you run out of safe teleports, this can be dangerous! You can also move with the keyboard:
+      </p>
+      <img src="images/keycontrols.png">
+      <div class="lower">
+        <a class="button-bigger" ng-click="ctrl.toggleInstructions();">
+          got it
+        </a>
+      </div>
+    </div>
+    
+    <div ng-if="ctrl.game.showSettings" 
+      class="game-overlay game-overlay-content game-overlay-content-settings">
+        <div class="settings-group">
+          <div class="settings-item"><em>graphics</em></div> 
+          <div class="settings-item" 
+            ng-click="ctrl.game.setMaximal(false)"
+            ng-class="{settingsItemSelected: !ctrl.game.maximalGraphics}">minimal</div> 
+          <div class="settings-item" 
+            ng-click="ctrl.game.setMaximal(true)"
+            ng-class="{settingsItemSelected: ctrl.game.maximalGraphics}">maximal</div>
+        </div>
+        
+        <div class="settings-group">
+          <div class="settings-item"><em>board</em></div>
+          <div class="settings-item" 
+            ng-click="ctrl.setSize(8)"
+            ng-class="{settingsItemSelected: ctrl.game.boardSize == 8}">8x8</div>
+          <div class="settings-item" 
+            ng-click="ctrl.setSize(16)"
+            ng-class="{settingsItemSelected: ctrl.game.boardSize == 16}">16x16</div>
+          <div class="settings-item" 
+            ng-click="ctrl.setSize(32)"
+            ng-class="{settingsItemSelected: ctrl.game.boardSize == 32}">32x32</div>
+        </div>
+        
+      <div class="lower">
+        <a class="button-bigger" ng-click="ctrl.toggleSettings();">
+          done with settings
+        </a>
+      </div>
+      <div style="height:50%" ng-click="ctrl.clearOverlays();"><!-- hacky --></div>
+    </div>
+    
+  </div>
+  
+  <div id="footer">
+    <h1 class="teleport" ng-click="ctrl.game.move('teleport')">teleport</h1>
+    <div class="info-container">
+      <div class="safe-teleports-container">{{ ctrl.game.safeTeleports }}</div>
+    </div>
+  </div>
+</div>

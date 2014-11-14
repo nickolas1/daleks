@@ -1,0 +1,19 @@
+<div id="game-{{ ngModel.boardSize }}">
+  <div class="board-container">
+    <div class="board-cell"
+      ng-repeat="cell in ngModel.board track by $index"
+      ng-mouseover="ngModel.setMouseDirection($index)"
+      ng-click="ngModel.mouseMove()"
+      ng-class="{mouseSelected: $index == ngModel.mouseDirectionIndex}">
+    </div>
+  </div>
+  <div class="piece-container"
+    ng-class="{maximal: ngModel.maximalGraphics}">
+    <div piece 
+      ng-model="piece" 
+      ng-mouseover="ngModel.setMouseDirection($index)"
+      ng-click="ngModel.mouseMove()"
+      ng-repeat="piece in ngModel.pieces track by $id(tile.id || $index)">
+    </div>
+  </div>
+</div>
