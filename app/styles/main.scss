@@ -165,8 +165,8 @@ h1.teleport:active, h1.title:active, h1.info:active, .settings:active {
   padding-top: 20%;
   font-size: 7em;
   font-weight: 300;
-  overflow: hidden;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .game-overlay-fade {
@@ -257,7 +257,7 @@ h1.teleport:active, h1.title:active, h1.info:active, .settings:active {
     margin: 0 auto;
     overflow: hidden;
   }
-
+  
   #game-container-#{$cell-count} {
      position: relative;
      width: $true-width;
